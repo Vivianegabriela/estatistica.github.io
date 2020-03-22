@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Teste </title>
+    <script src="descritiva2.js"></script>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="./materialize.css" type="text/css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar-fixed">
+            <nav class="teal lighten-2 z-depth-0">
+                <div class="nav-wrapper container">
+
+                    <a href="#" class="brand-logo"><i class="material-icons">timeline</i></a>
+                    <a href="#" data-activates="menu-mobile" class="button-collapse">
+                        <i class="material-icons">menu</i>
+                    </a>
+
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="#"><i class="material-icons left">home</i>Início</a></li>
+                        <li class="active"><a href="#">Estatítisca Descritiva</a></li>
+                        <li><a href="#">Probabilidade</a></li>
+                        <li><a href="#">Correlação e Regressão</a></li>
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+        <ul id="menu-mobile" class="side-nav">
+            <li class="active"><a href="#"><i class="material-icons left">home</i>Início</a></li>
+            <li><a href="#">Estatítisca Descritiva</a></li>
+            <li><a href="#">Probabilidade</a></li>
+            <li><a href="#">Correlação e Regressão</a></li>
+        </ul>
+    </header>
+
+    <div class="section"></div>
+
+    <main class="center">
+        <div class="container section z-depth-1 grey lighten-4 row"
+            style="display: inline-block; padding: 20px 135px; border: 1px solid #EEE;">
+            <p>Nome da variável <input type="text" id="nomeVar"></p>
+
+            <p>
+                <input name="tipoDados" type="radio" id="amst" />
+                <label for="amst">Amostra</label>
+
+                <input name="tipoDados" type="radio" id="pop" />
+                <label for="pop">População</label>
+            </p>
+
+            <p>Entrada de dados <input type="text" id="dados"></p>
+            <p>
+                <input name="tipoVar" type="radio" id="qualiNominal" />
+                <label for="qualiNominal">Variável Qualitativa Nominal</label>
+            </p>
+            <p>
+                <input name="tipoVar" type="radio" id="qualiOrdinal" />
+                <label for="qualiOrdinal">Variável Qualitativa Ordinal</label>
+            </p>
+            <p>
+                <input name="tipoVar" type="radio" id="quantiDiscreta" />
+                <label for="quantiDiscreta">Variável Quantitativa Discreta</label>
+            </p>
+            <p>
+                <input name="tipoVar" type="radio" id="quantiContinua" />
+                <label for="quantiContinua">Variável Quantitativa Contínua</label>
+            </p>
+
+            <p><button onclick="entrarDados()" class="waves-effect waves-light btn pink darken-3"> Calcular
+                </button></p>
+
+            <table class="centered responsive-table">
+                <thead>
+                    <tr>
+                        <th id="nome"> Variável </th>
+                        <th> Frequência Simples</th>
+                        <th> Frequência Relativa (%) </th>
+                        <th> Frequencia Acumulada </th>
+                        <th> Frequencia Acumulada Percentual (%) </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- JQuery  -->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <!-- Materialize JS -->
+    <script src="./materialize.js"></script>
+
+</body>
+
+</html>
