@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Estatística Descritiva </title>
+    <link href="style.css" rel="stylesheet">
+    <script src="descritiva.js"></script>
+</head>
+
+<body>
+    <label for="nomeVar"> Variável pesquisada: </label>
+    <input type="text" id="nomeVar">
+
+    <p>
+        <input type="radio" name="tipoDados" id="pop"><label for="pop"> População </label>
+        <input type="radio" name="tipoDados" id="amst"><label for="amst"> Amostra </label>
+    </p>
+
+    <label for="dados"> Inserir dados: <input type="text" id="dados"></label>
+
+    <p>
+        <input type="radio" name="tipoVar" id="qualiNominal">
+        <label for="qualiNominal"> Variável Qualitativa Nominal </label>
+
+        <input type="radio" name="tipoVar" id="qualiOrdinal">
+        <label for="qualiOrdinal"> Variável Qualitativa Ordinal </label>
+
+        <input type="radio" name="tipoVar" id="quantiDiscreta">
+        <label for="quantiDiscreta"> Variável Quantitativa Discreta </label>
+
+        <input type="radio" name="tipoVar" id="quantiContinua">
+        <label for="quantiContinua"> Variável Quantitativa Contínua </label>
+    </p>
+    <button onclick="entrada()"> Calcular </button>
+
+    <p id="tab"> </p>
+</body>
+
+</html>
