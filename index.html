@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Estatística Descritiva </title>
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body onload="iniciar()">
+
+    <!-- MENU SUPERIOR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand h1 mb-0" href="#">Statistic</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSite">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" type="button" onclick="menu('descr')">Descritiva</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" type="button" onclick="menu('prob')">Probabilidade</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" type="button" onclick="menu('correg')">Correlação</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="descr" class="menu">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="collapse show mostrarTabela">
+                    <div class="card-body">
+                        <form class="form">
+                            <h2 class="h2"> Estatística Descritiva </h2>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">Variável Pesquisada</label>
+                                </div>
+                                <input type="text" id="nomeVar" class="form-control">
+                            </div>
+
+                            <div class="form-group d-flex justify-content-center">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-dark">
+                                        <input type="radio" name="tipoDados" id="pop">População
+                                    </label>
+
+                                    <label class="btn btn-dark">
+                                        <input type="radio" name="tipoDados" id="amst">Amostra
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <select id="tipoVar" class="custom-select">
+                                        <option value="" disabled selected>Tipo Variável</option>
+                                        <option value="nominal">Qualitativa Nominal</option>
+                                        <option value="ordinal">Qualitativa Ordinal</option>
+                                        <option value="discreta">Quantitativa Discreta</option>
+                                        <option value="continua">Quantitativa Contínua</option>
+                                    </select>
+                                </div>
+                                <input type="text" class="form-control" id="dados"
+                                    placeholder="dados separados por ' ; '" title="ex: 1;2;3;4;5">
+                            </div>
+
+                            <div class="separatriz">
+                                <select class="custom-select" name="medidaSep" id="medidaSep">
+                                    <option value="" selected disabled>Separatriz</option>
+                                    <option value="quartil">Quartil</option>
+                                    <option value="quintil">Quintil</option>
+                                    <option value="decil">Decil</option>
+                                    <option value="porcentil">Porcentil</option>
+                                </select>
+
+                                <div class="d-flex justify-content-start mt-3">
+                                    <input type="range" id="range" class="campo"><span class="valor">50</span>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                <input class="btn btn-dark" type="button" value="Calcular" onclick="entrada()"
+                                    data-toggle="collapse" data-target='.mostrarTabela'>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- TABELA -->
+            <div class="justify-content-center">
+                <div class="collapse mostrarTabela">
+                    <div class="card-body">
+                        <div id="tab"> Insira os dados para aparecer a tabela! :)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="card-body">
+                                <div id="list"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input class="btn btn-dark" type="button" value="Inserir dados" data-toggle="collapse"
+                            data-target='.mostrarTabela'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prob" class="menu">
+        <div class="container">
+            <!-- MENU PROBABILIDADE -->
+            <div class="d-flex justify-content-center">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-dark">
+                        <input type="radio" name="dist" id="binominal" onclick="tipoDist('bi')">Binominal
+                    </label>
+
+                    <label class="btn btn-dark">
+                        <input type="radio" name="dist" id="normal" onclick="tipoDist('nor')">Normal
+                    </label>
+
+                    <label class="btn btn-dark">
+                        <input type="radio" name="dist" id="uniforme" onclick="tipoDist('uni')">Uniforme
+                    </label>
+                </div>
+            </div>
+
+            <!-- DISTRIBUIÇÃO BINOMINAL -->
+            <div id="bi" class="dist">
+                <div class="collapse show mostrarLista">
+                    <div class="row justify-content-center">
+                        <div class="input-group mb-3 col-4">
+                            <!-- INPUT AMOSTRA (N) -->
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="amost">Amostra</label>
+                            </div>
+                            <input type="number" class="form-control" id="amost">
+                        </div>
+
+                        <div class="input-group mb-3 col-4">
+                            <!-- INPUT EVENTO (K) -->
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="evento">Evento</label>
+                            </div>
+                            <input type="text" class="form-control" id="evento" placeholder="dados separados por ' ; '">
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="input-group mb-3 col-4">
+                            <!-- INPUT SUCESSO (P) -->
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sucesso">Sucesso</label>
+                            </div>
+                            <input type="number" class="form-control" id="sucesso"
+                                placeholder="apenas decimais (ex: 0.2)">
+                        </div>
+
+                        <div class="input-group mb-3 col-4">
+                            <!-- INPUT FRACASSO (Q) -->
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="fracasso">Fracasso</label>
+                            </div>
+                            <input type="number" class="form-control" id="fracasso"
+                                placeholder="apenas decimais (ex: 0.8)">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <input class="btn btn-dark" type="button" value="Calcular" onclick="calcula()"
+                            data-toggle="collapse" data-target='.mostrarLista'>
+                    </div>
+                </div>
+
+                <div class="collapse mostrarLista">
+                    <div class="row justify-content-center">
+                        <div class="col-5" id="resultadoBi">
+                            Insira os dados para aparecer os resultados! :)
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <input class="btn btn-dark" type="button" value="Inserir dados" data-toggle="collapse"
+                            data-target='.mostrarLista'>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DISTRIBUIÇÃO NORMAL -->
+            <div id="nor" class="dist">
+                <div class="collapse show mostrarLista2">
+                    <div class="row justify-content-center">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="media">Média</label>
+                                </div>
+                                <input type="number" class="form-control" id="media">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="dp">Desvio Padrão</label>
+                                </div>
+                                <input type="number" class="form-control" id="dp">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-2">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-dark">
+                                <input type="radio" name="tipo" onclick="tipoNor('tipoMenor')">Menor
+                            </label>
+
+                            <label class="btn btn-dark">
+                                <input type="radio" name="tipo" onclick="tipoNor('entre')">Entre
+                            </label>
+
+                            <label class="btn btn-dark">
+                                <input type="radio" name="tipo" onclick="tipoNor('tipoMaior')">Maior
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- DISTRIBUIÇÃO MENOR QUE (n) -->
+                        <div class="tipoDistNor" id="tipoMenor">
+                            <div class="row justify-content-center">
+                                <div class="col-5">
+                                    <input class="form-control" type="number" id="menorQue" placeholder="menor que">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DISTRIBUIÇÃO ENTRE (x) e (y) -->
+                        <div class="tipoDistNor" id="entre">
+                            <div class="row justify-content-center">
+                                <div class="col-3">
+                                    <input class="form-control" type="number" id="menor" placeholder="menor">
+                                </div>
+                                e
+                                <div class="col-3">
+                                    <input class="form-control" type="number" id="maior" placeholder="maior">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DISTRIBUIÇÃO MAIOR QUE (n) -->
+                        <div class="tipoDistNor" id="tipoMaior">
+                            <div class="row justify-content-center">
+                                <div class="col-5">
+                                    <input class="form-control" type="number" id="maiorQue" placeholder="maior que">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-2">
+                        <input class="btn btn-dark" type="button" value="Calcular" onclick="calcula()"
+                            data-toggle="collapse" data-target='.mostrarLista2'>
+                    </div>
+                </div>
+
+                <div class="collapse mostrarLista2">
+                    <div class="row justify-content-center">
+                        <div class="col-5" id="resultadoNormal">
+                            Insira os dados para aparecer os resultados! :)
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <input class="btn btn-dark" type="button" value="Inserir dados" data-toggle="collapse"
+                            data-target='.mostrarLista2'>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DITRIBUIÇÃO UNIFORME -->
+            <div id="uni" class="dist">
+                <div class="collapse show mostrarLista3">
+                    <div class="row justify-content-center">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="media">Mínimo</label>
+                                </div>
+                                <input type="number" class="form-control" id="min">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="dp">Máximo</label>
+                                </div>
+                                <input type="number" class="form-control" id="max">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-2">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-dark">
+                                <input type="radio" name="tiposDistUni" onclick="tipoUni('tipoMenorUni')">Menor
+                            </label>
+
+                            <label class="btn btn-dark">
+                                <input type="radio" name="tiposDistUni" onclick="tipoUni('entreUni')">Entre
+                            </label>
+
+                            <label class="btn btn-dark">
+                                <input type="radio" name="tiposDistUni" onclick="tipoUni('tipoMaiorUni')">Maior
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- DISTRIBUIÇÃO MENOR QUE (n) -->
+                        <div class="tipoDistUni" id="tipoMenorUni">
+                            <div class="row justify-content-center">
+                                <div class="col-5">
+                                    <input class="form-control" type="number" id="menorQueUni" placeholder="menor que">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DISTRIBUIÇÃO ENTRE (x) e (y) -->
+                        <div class="tipoDistUni" id="entreUni">
+                            <div class="row justify-content-center">
+                                <div class="col-3">
+                                    <input class="form-control" type="number" id="menorUni" placeholder="menor">
+                                </div>
+                                e
+                                <div class="col-3">
+                                    <input class="form-control" type="number" id="maiorUni" placeholder="maior">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DISTRIBUIÇÃO MAIOR QUE (n) -->
+                        <div class="tipoDistUni" id="tipoMaiorUni">
+                            <div class="row justify-content-center">
+                                <div class="col-5">
+                                    <input class="form-control" type="number" id="maiorQueUni" placeholder="maior que">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-2">
+                        <input class="btn btn-dark" type="button" value="Calcular" onclick="calcula()"
+                            data-toggle="collapse" data-target='.mostrarLista3'>
+                    </div>
+                </div>
+
+                <div class="collapse mostrarLista3">
+                    <div class="row justify-content-center">
+                        <div class="col-5" id="resultadoUniforme">
+                            Insira os dados para aparecer os resultados! :)
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <input class="btn btn-dark" type="button" value="Inserir dados" data-toggle="collapse"
+                            data-target='.mostrarLista3'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="correg" class="menu">
+        <div class="d-flex justify-content-center">
+            <div class="h4">Ops... não tem nada aqui :/</div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        // BOTÕES MENU
+        function menu(id) {
+            respostas = document.getElementsByClassName('menu'); //recupera todos elementos da classe faq
+            for (var i = 0; i < respostas.length; i++) { // coloca todos eles invisiveis
+                respostas[i].style.display = 'none';
+            }
+
+            clicada = document.getElementById(id); //recupera o id passado por argumento
+            clicada.style.display = 'inherit'; //faz ele ser exibido conforme o item pai
+        }
+
+        // BOTÕES DE TIPOS DE DISTRIBUIÇÃO (BINOMINAL ou NORMAL ou UNIFORME)
+        function tipoDist(id) {
+            respostas = document.getElementsByClassName('dist'); //recupera todos elementos da classe faq
+            for (var i = 0; i < respostas.length; i++) { // coloca todos eles invisiveis
+                respostas[i].style.display = 'none';
+            }
+
+            clicada = document.getElementById(id); //recupera o id passado por argumento
+            clicada.style.display = 'inherit'; //faz ele ser exibido conforme o item pai
+        }
+
+        // BOTÕES DE TIPOS DE PROBABILIDADE (MENOR QUE ou ENTRE ou MAIOR QUE) - DIST. NORMAL
+        function tipoNor(id) {
+            respostas = document.getElementsByClassName('tipoDistNor'); //recupera todos elementos da classe faq
+            for (var i = 0; i < respostas.length; i++) { // coloca todos eles invisiveis
+                respostas[i].style.display = 'none';
+            }
+
+            clicada = document.getElementById(id); //recupera o id passado por argumento
+            clicada.style.display = 'inherit'; //faz ele ser exibido conforme o item pai
+        }
+
+        // BOTÕES DE TIPOS DE PROBABILIDADE (MENOR QUE ou ENTRE ou MAIOR QUE) - DIST. UNIFORME
+        function tipoUni(id) {
+            respostas = document.getElementsByClassName('tipoDistUni'); //recupera todos elementos da classe faq
+            for (var i = 0; i < respostas.length; i++) { // coloca todos eles invisiveis
+                respostas[i].style.display = 'none';
+            }
+
+            clicada = document.getElementById(id); //recupera o id passado por argumento
+            clicada.style.display = 'inherit'; //faz ele ser exibido conforme o item pai
+        }
+    </script>
+    <script src="descritiva.js"></script>
+    <script src="probabilidade.js"></script>
+
+    <!-- JQuery | Popper.js | Bootstrap JS-->
+    <script src="jquery.js"></script>
+    <script src="popper.js"></script>
+    <script src="bootstrap.js"></script>
+</body>
+
+</html>
